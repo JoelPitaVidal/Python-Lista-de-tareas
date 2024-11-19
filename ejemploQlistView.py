@@ -46,6 +46,7 @@ class ExampleQListView (QMainWindow):
         self.setCentralWidget(container)
         self.setFixedSize (400,300)
         self.show()
+
         #Boton añadir nueva tarea
     def on_btnEngadirTarefa_pressed(self):
         texto=self.txtTarefa.text().strip()
@@ -64,9 +65,9 @@ class ExampleQListView (QMainWindow):
                 del self.modelo.tarefas[indices.row()]
             # Permitimos que se actualicen las tareas con esta línea
             self.modelo.layoutChanged.emit()
-        if not indices:
-            self.modelo.layoutChanged.emit()
-            self.txtTarefa.clear()
+
+
+
 if __name__ == "__main__":
         aplicacion = QApplication(sys.argv)
         fiestra = ExampleQListView()

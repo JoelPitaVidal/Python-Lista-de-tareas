@@ -1,5 +1,11 @@
 import sys
+from turtledemo.nim import Stick
+
 from PyQt6.QtCore import Qt, QAbstractListModel
+from PyQt6.QtGui import QImage
+
+tick = QImage('tick.jpg')
+
             #Manejo de listas
 class ModeloTarefas (QAbstractListModel):
             #Inicilizamos la clase y llamamos a la superclase
@@ -7,12 +13,18 @@ class ModeloTarefas (QAbstractListModel):
             super().__init__()
             #Se le asigna a tareas un valor o se crea como lista vacía
             self.tarefas = tarefas or []
+
             #definimos el metodo data
         def data (self, indice , rol):
             if rol ==Qt.ItemDataRole.DisplayRole:
             #igualamos una variable texto a la fila de la lista tarefas
                 _, texo = self.tarefas [indice.row()]
                 return texo
+            if rol == Qt.ItemDataRole.DecorationRole:
+                estado,_ = self.tarefas[indice.row()]
+                if estado:
+                    return tick
+
             #Devolvemos el tamaño de la lista
         def rowCount(self, indice):
             return  len(self.tarefas)
