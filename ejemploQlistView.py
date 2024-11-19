@@ -26,7 +26,7 @@ class ExampleQListView (QMainWindow):
         #Boton borrar tareaa
         caixaHBotons= QHBoxLayout()
         btnBorrar = QPushButton("Borrar")
-        #btnBorrar.pressed.connect (self.on_btnBorrar_pressed)
+        btnBorrar.pressed.connect (self.on_btnBorrar_pressed)
         #Boton tarea echa
         btnFeito = QPushButton ("Feito")
         #btnFeito.pressed.connect (self.on_btnFeito_pressed)
@@ -57,8 +57,13 @@ class ExampleQListView (QMainWindow):
             self.txtTarefa.clear()
 
     def on_btnBorrar_pressed(self):
-
-
+        indices = self.lstTArefas.selectedIndexes()
+        if indices:
+            # Invertimos los índices y eliminamos desde el final para evitar problemas de reindexación
+            for index in sorted(indices, key=lambda x: x.row(), reverse=True):
+                del self.modelo.tarefas[index.row()]
+            # Permitimos que se actualicen las tareas con esta línea
+            self.modelo.layoutChanged.emit()
 
 
 if __name__ == "__main__":
