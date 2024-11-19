@@ -1,9 +1,7 @@
 import sys
-from lib2to3.pygram import pattern_symbols
 
 from PyQt6.QtGui import QPalette, QColor
-from PyQt6.QtWidgets import (QMainWindow, QApplication, QVBoxLayout, QWidget,
-                              QStackedLayout)
+from PyQt6.QtWidgets import (QMainWindow, QApplication, QVBoxLayout, QWidget,QStackedLayout)
 
 from CajaColor import CajaColor
 from DatosFormulario import DatosWidget
@@ -74,8 +72,6 @@ class MainWindow(QMainWindow):
         self.stack_layout.addWidget(CajaColor("white"))
         container_formulario = QWidget()
 
-
-
         container_formulario.setLayout(caja_formulario)
         self.stack_layout.addWidget(container_formulario)
 
@@ -83,9 +79,6 @@ class MainWindow(QMainWindow):
         caja_central.addLayout(boton_color_cambio)
         caja_central.addLayout(boton_color_cambio_radio)
         caja_central.addLayout(self.boton_color_cambio_check)
-
-
-
 
         self.stack_layout.setCurrentIndex(0)
 
@@ -135,15 +128,6 @@ class MainWindow(QMainWindow):
             self.stack_layout.setCurrentIndex(6)
         elif self.boton_color_cambio_check.button_formulario.isChecked():
             self.stack_layout.setCurrentIndex(7)
-
-
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
