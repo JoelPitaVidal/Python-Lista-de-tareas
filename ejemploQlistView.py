@@ -60,12 +60,13 @@ class ExampleQListView (QMainWindow):
         indices = self.lstTArefas.selectedIndexes()
         if indices:
             # Invertimos los índices y eliminamos desde el final para evitar problemas de reindexación
-            for index in sorted(indices, key=lambda x: x.row(), reverse=True):
-                del self.modelo.tarefas[index.row()]
+            for indices in sorted(indices, key=lambda x: x.row(), reverse=True):
+                del self.modelo.tarefas[indices.row()]
             # Permitimos que se actualicen las tareas con esta línea
             self.modelo.layoutChanged.emit()
-
-
+        if not indices:
+            self.modelo.layoutChanged.emit()
+            self.txtTarefa.clear()
 if __name__ == "__main__":
         aplicacion = QApplication(sys.argv)
         fiestra = ExampleQListView()
