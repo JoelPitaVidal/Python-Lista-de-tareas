@@ -61,7 +61,9 @@ class ExampleQListView (QMainWindow):
         indices = self.lstTarefas.selectedIndexes()
         if indices:
             for indice in indices:
+                #Cogemos el indice y el texto
                 _, texto = self.modelo.tarefas [indice.row()]
+                #Cambiamos el indice a True para que aparezca el icono
                 self.modelo.tarefas [indice.row()] = (True,texto)
             self.modelo.dataChanged.emit(indice,indice)
             self.lstTarefas.clearSelection()
