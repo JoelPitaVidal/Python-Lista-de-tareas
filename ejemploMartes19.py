@@ -4,7 +4,8 @@ from turtledemo.nim import Stick
 from PyQt6.QtCore import Qt, QAbstractListModel
 from PyQt6.QtGui import QImage
 
-tick = QImage('tick.jpg')
+tick = QImage('tick.png')
+cros = QImage('tick.png')
 
             #Manejo de listas
 class ModeloTarefas (QAbstractListModel):
@@ -24,6 +25,8 @@ class ModeloTarefas (QAbstractListModel):
                 estado,_ = self.tarefas[indice.row()]
                 if estado:
                     return tick
+                if not estado:
+                    return cros
 
             #Devolvemos el tamaño de la lista
         def rowCount(self, indice):

@@ -18,18 +18,18 @@ class ExampleQListView (QMainWindow):
 
         caixav = QVBoxLayout ()
 
-        self.lstTArefas = QListView()
-        self.lstTArefas.setModel(self.modelo)
+        self.lstTarefas = QListView()
+        self.lstTarefas.setModel(self.modelo)
         #Habilitamos una selección múltiple
-        self.lstTArefas.setSelectionMode(QListView.SelectionMode.MultiSelection)
-        caixav.addWidget(self.lstTArefas)
+        self.lstTarefas.setSelectionMode(QListView.SelectionMode.MultiSelection)
+        caixav.addWidget(self.lstTarefas)
         #Boton borrar tareaa
         caixaHBotons= QHBoxLayout()
         btnBorrar = QPushButton("Borrar")
         btnBorrar.pressed.connect (self.on_btnBorrar_pressed)
         #Boton tarea echa
         btnFeito = QPushButton ("Feito")
-        #btnFeito.pressed.connect (self.on_btnFeito_pressed)
+        btnFeito.pressed.connect (self.on_btnFeito_pressed)
         caixaHBotons.addWidget(btnBorrar)
         caixaHBotons.addWidget(btnFeito)
 
@@ -57,14 +57,27 @@ class ExampleQListView (QMainWindow):
             self.modelo.layoutChanged.emit()
             self.txtTarefa.clear()
 
+    def on_btnFeito_pressed(self):
+        indices = self.lstTarefas.selectedIndexes()
+        if indices:
+            for indice in indices:
+                _, texto = self.modelo.tarefas [indice.row()]
+                self.modelo.tarefas [indice.row()] = (True,texto)
+            self.modelo.dataChanged.emit(indice,indice)
+            self.lstTarefas.clearSelection()
+
+
     def on_btnBorrar_pressed(self):
-        indices = self.lstTArefas.selectedIndexes()
+        indices = self.lstTarefas.selectedIndexes()
         if indices:
             # Invertimos los índices y eliminamos desde el final para evitar problemas de reindexación
-            for indices in sorted(indices, key=lambda x: x.row(), reverse=True):
-                del self.modelo.tarefas[indices.row()]
+            for indice in sorted(indices, reverse=True):
+                print(indice.row())
+                del self.modelo.tarefas[indice.row()]
             # Permitimos que se actualicen las tareas con esta línea
             self.modelo.layoutChanged.emit()
+            # Borramos la selección anterior para actualizar los índices
+            self.lstTarefas.clearSelection()
 
 
 
